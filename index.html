@@ -365,7 +365,7 @@
 
   <script>
     const SERVER_ADDRESS = "play.drcelestial.net";
-    const API_URL = "http://localhost:3001/api/server-status";
+    const API_URL = "/api/server-status";
 
     const refreshButton = document.getElementById("refreshButton");
     const statusBadge = document.getElementById("statusBadge");
@@ -464,7 +464,7 @@
         try {
           data = JSON.parse(text);
         } catch (error) {
-          throw new Error("Backend did not return JSON. Is your API running?");
+          throw new Error("Backend did not return JSON.");
         }
 
         if (!response.ok) {
