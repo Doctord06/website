@@ -1,0 +1,184 @@
+export default {
+  async fetch(request) {
+    const serverAddress = "mc.hypixel.net";
+    const apiUrl = `https://api.mcsrvstat.us/3/${serverAddress}`;
+
+    let online = false;
+    let playerCount = 0;
+    let maxPlayers = 0;
+    let motd = "No server description found.";
+
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+
+      online = Boolean(data.online);
+      playerCount = data.players?.online ?? 0;
+      maxPlayers = data.players?.max ?? 0;
+
+      if (Array.isArray(data.motd?.clean) && data.motd.clean.length > 0) {
+        motd = data.motd.clean.join(" ");
+      }
+    } catch (error) {
+      online = false;
+      playerCount = 0;
+      maxPlayers = 0;
+      motd = "Unable to fetch server status.";
+    }
+
+    const statusText = online ? "ONLINE" : "OFFLINE";
+    const playerText = online ? `${playerCount}/${maxPlayers || "?"}` : "0/0";
+    const statusBg = online
+      ? "rgba(0, 200, 120, 0.18)"
+      : "rgba(255, 80, 80, 0.18)";
+    const statusBorder = online
+      ? "rgba(0, 200, 120, 0.45)"
+      : "rgba(255, 80, 80, 0.45)";
+    const statusColor = online ? "#7dffbf" : "#ff9b9b";
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DrCelestial Server Status</title>
+  <meta http-equiv="refresh" content="30">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #1f3552 0%, #0c1420 45%, #05080d 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 680px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+    }
+
+    .server-ip {
+      font-size: 18px;
+      opacity: 0.88;
+      margin-bottom: 28px;
+      word-break: break-word;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 14px;
+      margin-bottom: 28px;
+      background: ${statusBg};
+      border: 1px solid ${statusBorder};
+      color: ${statusColor};
+    }
+
+    .count {
+      font-size: clamp(48px, 10vw, 88px);
+      font-weight: 800;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .label {
+      margin-top: 8px;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+
+    .motd {
+      margin: 28px auto 0;
+      max-width: 520px;
+      font-size: 15px;
+      line-height: 1.5;
+      opacity: 0.75;
+    }
+
+    .refresh {
+      margin-top: 16px;
+    }
+
+    .refresh a {
+      display: inline-block;
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .refresh a:hover {
+      background: rgba(255,255,255,0.16);
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 13px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="eyebrow">Minecraft Server Status</div>
+    <h1>DrCelestial</h1>
+    <div class="server-ip">${serverAddress}</div>
+
+    <div class="status">${statusText}</div>
+
+    <p class="count">${playerText}</p>
+    <div class="label">Players Online</div>
+
+    <div class="motd">${motd}</div>
+
+    <div class="refresh">
+      <a href="/">Refresh</a>
+    </div>
+
+    <div class="footer">Player count may be delayed slightly due to API caching.</div>
+  </main>
+</body>
+</html>`;
+
+    return new Response(html, {
+      headers: {
+        "content-type": "text/html; charset=UTF-8",
+      },
+    });
+  },
+};
