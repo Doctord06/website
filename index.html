@@ -1,490 +1,314 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DrCelestial Server Status</title>
-  <style>
-    :root {
-      --bg: #020817;
-      --panel: rgba(255,255,255,0.05);
-      --panel-2: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.10);
-      --text: #ffffff;
-      --muted: rgba(255,255,255,0.70);
-      --muted-2: rgba(255,255,255,0.55);
-      --cyan: #67e8f9;
-      --blue: #60a5fa;
-      --green-bg: rgba(52, 211, 153, 0.12);
-      --green-border: rgba(52, 211, 153, 0.25);
-      --green-text: #bbf7d0;
-      --red-bg: rgba(248, 113, 113, 0.10);
-      --red-border: rgba(248, 113, 113, 0.20);
-      --red-text: #fecaca;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(34,211,238,0.14), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 35%),
-        var(--bg);
-      color: var(--text);
-    }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 32px 24px 48px;
-    }
-
-    .hero-grid,
-    .bottom-grid {
-      display: grid;
-      gap: 24px;
-    }
-
-    .hero-grid {
-      grid-template-columns: 1.2fr 0.8fr;
-      margin-bottom: 32px;
-    }
-
-    .bottom-grid {
-      grid-template-columns: 1fr 0.8fr;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-    }
-
-    .card-inner {
-      padding: 32px;
-    }
-
-    .stack {
-      display: grid;
-      gap: 16px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      border: 1px solid rgba(34,211,238,0.20);
-      background: rgba(34,211,238,0.10);
-      color: var(--cyan);
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      font-size: clamp(52px, 8vw, 78px);
-      line-height: 0.95;
-      margin: 0 0 18px;
-      font-weight: 900;
-    }
-
-    h1 .accent {
-      display: block;
-      background: linear-gradient(90deg, var(--cyan), var(--blue));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    h2 {
-      font-size: 36px;
-      line-height: 1.05;
-      margin: 0 0 14px;
-      font-weight: 900;
-    }
-
-    .subtext,
-    .metric-label,
-    .pill,
-    .empty,
-    .small-text {
-      color: var(--muted);
-    }
-
-    .subtext {
-      font-size: 18px;
-      line-height: 1.6;
-      max-width: 780px;
-      margin: 0 0 24px;
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    button {
-      border: 0;
-      border-radius: 18px;
-      padding: 16px 22px;
-      font-size: 18px;
-      font-weight: 800;
-      cursor: pointer;
-      color: #082f49;
-      background: linear-gradient(90deg, var(--cyan), var(--blue));
-      transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-    }
-
-    button:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .status-pill,
-    .pill,
-    .player-chip {
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--panel-2);
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 16px 18px;
-      font-weight: 700;
-      color: var(--muted);
-    }
-
-    .status-pill.online {
-      background: var(--green-bg);
-      border-color: var(--green-border);
-      color: var(--green-text);
-    }
-
-    .status-pill.offline {
-      background: var(--panel-2);
-      color: var(--muted);
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .pill {
-      padding: 10px 14px;
-      font-size: 15px;
-    }
-
-    .message {
-      margin-top: 18px;
-      border-radius: 18px;
-      padding: 16px 18px;
-      border: 1px solid rgba(34,211,238,0.20);
-      background: rgba(34,211,238,0.10);
-      color: #cffafe;
-    }
-
-    .message.error {
-      border-color: var(--red-border);
-      background: var(--red-bg);
-      color: var(--red-text);
-    }
-
-    .metric-card {
-      padding: 28px;
-    }
-
-    .metric-label {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .metric-value {
-      font-size: clamp(40px, 5vw, 58px);
-      line-height: 1;
-      font-weight: 900;
-      word-break: break-word;
-    }
-
-    .metric-value .secondary {
-      font-size: 28px;
-      color: var(--muted-2);
-    }
-
-    .panel-body {
-      padding: 28px;
-    }
-
-    .motd-box,
-    .empty {
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,0.20);
-      padding: 22px;
-      min-height: 120px;
-      line-height: 1.7;
-      font-size: 18px;
-    }
-
-    .player-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .player-chip {
-      padding: 10px 14px;
-      color: #cffafe;
-      border-color: rgba(34,211,238,0.20);
-      background: rgba(34,211,238,0.10);
-      font-weight: 600;
-    }
-
-    @media (max-width: 1000px) {
-      .hero-grid,
-      .bottom-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 700px) {
-      .container {
-        padding: 20px 16px 32px;
-      }
-
-      .card-inner,
-      .panel-body,
-      .metric-card {
-        padding: 22px;
-      }
-
-      h2 {
-        font-size: 28px;
-      }
-
-      .subtext {
-        font-size: 17px;
-      }
-
-      button,
-      .status-pill {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-  </style>
-</head>
-<body>
-  <main class="container">
-    <section class="hero-grid">
-      <div class="card">
-        <div class="card-inner">
-          <div class="badge">play.drcelestial.net</div>
-
-          <h1>
-            DrCelestial
-            <span class="accent">server status</span>
-          </h1>
-
-          <p class="subtext">
-            Live Java server status card for your Minecraft server, including online state, player count, version, and MOTD.
-          </p>
-
-          <div class="controls">
-            <button id="refreshButton">Refresh status</button>
-            <div id="statusBadge" class="status-pill offline">Offline</div>
-          </div>
-
-          <div class="pill-row">
-            <div class="pill">Host: <span id="hostValue">play.drcelestial.net</span></div>
-            <div class="pill">Resolved IP: <span id="ipValue">Unknown</span></div>
-            <div class="pill">Port: <span id="portValue">25565</span></div>
-            <div class="pill">Auto refresh: 2 min</div>
-            <div class="pill">Last fetch: <span id="lastFetchValue">Waiting for first fetch</span></div>
-          </div>
-
-          <div id="messageBox" class="message" style="display:none;"></div>
-        </div>
-      </div>
-
-      <div class="stack">
-        <div class="card metric-card">
-          <div class="metric-label">Players online</div>
-          <div class="metric-value"><span id="playersOnlineValue">—</span> <span class="secondary">/ <span id="playersMaxValue">—</span></span></div>
-        </div>
-
-        <div class="card metric-card">
-          <div class="metric-label">Version</div>
-          <div id="versionValue" class="metric-value">Unavailable</div>
-        </div>
-
-        <div class="card metric-card">
-          <div class="metric-label">Software</div>
-          <div id="softwareValue" class="metric-value">Unavailable</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="bottom-grid">
-      <div class="card panel-body">
-        <h2>Message of the day</h2>
-        <div id="motdValue" class="motd-box">No MOTD available.</div>
-      </div>
-
-      <div class="card panel-body">
-        <h2>Online players</h2>
-        <div id="playerList" class="player-list"></div>
-        <div id="playerListEmpty" class="empty">No player names are currently available.</div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const SERVER_ADDRESS = "play.drcelestial.net";
-    const API_URL = "/api/server-status";
-
-    const refreshButton = document.getElementById("refreshButton");
-    const statusBadge = document.getElementById("statusBadge");
-    const hostValue = document.getElementById("hostValue");
-    const ipValue = document.getElementById("ipValue");
-    const portValue = document.getElementById("portValue");
-    const lastFetchValue = document.getElementById("lastFetchValue");
-    const messageBox = document.getElementById("messageBox");
-    const playersOnlineValue = document.getElementById("playersOnlineValue");
-    const playersMaxValue = document.getElementById("playersMaxValue");
-    const versionValue = document.getElementById("versionValue");
-    const softwareValue = document.getElementById("softwareValue");
-    const motdValue = document.getElementById("motdValue");
-    const playerList = document.getElementById("playerList");
-    const playerListEmpty = document.getElementById("playerListEmpty");
-
-    function formatNumber(value) {
-      if (typeof value !== "number" || Number.isNaN(value)) return "—";
-      return new Intl.NumberFormat().format(value);
-    }
-
-    function parseMotd(data) {
-      const motd = data && data.motd;
-      if (Array.isArray(motd && motd.clean) && motd.clean.length) return motd.clean.join(" ");
-      if (typeof (motd && motd.clean) === "string") return motd.clean;
-      if (Array.isArray(motd && motd.html) && motd.html.length) {
-        return motd.html.join(" ").replace(/<[^>]+>/g, "");
-      }
-      return "No MOTD available.";
-    }
-
-    function setMessage(text, type) {
-      if (!text) {
-        messageBox.style.display = "none";
-        messageBox.textContent = "";
-        messageBox.className = "message";
-        return;
-      }
-
-      messageBox.style.display = "block";
-      messageBox.textContent = text;
-      messageBox.className = type === "error" ? "message error" : "message";
-    }
-
-    function renderPlayers(players) {
-      playerList.innerHTML = "";
-
-      if (!Array.isArray(players) || players.length === 0) {
-        playerList.style.display = "none";
-        playerListEmpty.style.display = "block";
-        return;
-      }
-
-      playerList.style.display = "flex";
-      playerListEmpty.style.display = "none";
-
-      for (const player of players) {
-        const chip = document.createElement("div");
-        chip.className = "player-chip";
-        chip.textContent = player;
-        playerList.appendChild(chip);
-      }
-    }
-
-    function renderData(data) {
-      const isOnline = !!data.online;
-      const players = data.players || {};
-
-      hostValue.textContent = data.hostname || SERVER_ADDRESS;
-      ipValue.textContent = data.ip || "Unknown";
-      portValue.textContent = data.port || 25565;
-      playersOnlineValue.textContent = typeof players.online === "number" ? formatNumber(players.online) : "—";
-      playersMaxValue.textContent = typeof players.max === "number" ? formatNumber(players.max) : "—";
-      versionValue.textContent = data.version || (isOnline ? "Unknown" : "Unavailable");
-      softwareValue.textContent = data.software || (isOnline ? "Unknown" : "Unavailable");
-      motdValue.textContent = parseMotd(data);
-
-      statusBadge.textContent = isOnline ? "Online" : "Offline";
-      statusBadge.className = isOnline ? "status-pill online" : "status-pill offline";
-
-      renderPlayers(players.list || []);
-      lastFetchValue.textContent = new Date().toLocaleTimeString();
-      setMessage(data.error || "", data.error ? "error" : "info");
-    }
-
-    async function fetchStats() {
-      refreshButton.disabled = true;
-      refreshButton.textContent = "Refreshing...";
-      setMessage("Refreshing server data...", "info");
-
+import { useEffect, useMemo, useState } from "react";
+
+type ServerResponse = {
+  online?: boolean;
+  ip?: string | null;
+  port?: number | null;
+  version?: string | null;
+  software?: string | null;
+  motd?: {
+    clean?: string[] | string;
+    html?: string[];
+  } | null;
+  players?: {
+    online?: number | null;
+    max?: number | null;
+    list?: string[] | null;
+  } | null;
+};
+
+const SERVER_ADDRESS = "play.drcelestial.net";
+const API_URL = "/api/server-status";
+const REFRESH_INTERVAL_MS = 120000;
+
+function formatNumber(value: number | null | undefined): string {
+  if (typeof value !== "number" || Number.isNaN(value)) return "—";
+  return new Intl.NumberFormat().format(value);
+}
+
+function parseMotd(data: ServerResponse | null): string {
+  const motd = data?.motd;
+  if (Array.isArray(motd?.clean) && motd.clean.length > 0) return motd.clean.join(" ");
+  if (typeof motd?.clean === "string" && motd.clean.trim()) return motd.clean;
+  if (Array.isArray(motd?.html) && motd.html.length > 0) {
+    return motd.html.join(" ").replace(/<[^>]+>/g, "");
+  }
+  return "No MOTD available.";
+}
+
+export default function DrCelestialServerStatus(): JSX.Element {
+  const [serverData, setServerData] = useState<ServerResponse | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [error, setError] = useState<string>("");
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [copyMessage, setCopyMessage] = useState<string>("");
+
+  const fetchStats = async (): Promise<void> => {
+    try {
+      setStatus("loading");
+      setError("");
+
+      const response = await fetch(API_URL, { cache: "no-store" });
+      const text = await response.text();
+
+      let data: ServerResponse;
       try {
-        const response = await fetch(API_URL, { cache: "no-store" });
-        const text = await response.text();
-
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch (error) {
-          throw new Error("Backend did not return JSON.");
-        }
-
-        if (!response.ok) {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-
-        renderData(data);
-      } catch (error) {
-        setMessage(error instanceof Error ? error.message : "Failed to load server status.", "error");
-        statusBadge.textContent = "Offline";
-        statusBadge.className = "status-pill offline";
-      } finally {
-        refreshButton.disabled = false;
-        refreshButton.textContent = "Refresh status";
+        data = JSON.parse(text) as ServerResponse;
+      } catch {
+        throw new Error("Backend did not return JSON. Is your API running?");
       }
-    }
 
-    refreshButton.addEventListener("click", fetchStats);
-    fetchStats();
-    window.setInterval(fetchStats, 120000);
-  </script>
-</body>
-</html>
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      setServerData(data);
+      setLastUpdated(new Date());
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setError(err instanceof Error ? err.message : "Failed to load server status.");
+    }
+  };
+
+  useEffect(() => {
+    void fetchStats();
+
+    const intervalId = window.setInterval(() => {
+      void fetchStats();
+    }, REFRESH_INTERVAL_MS);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!copyMessage) return;
+
+    const timeoutId = window.setTimeout(() => {
+      setCopyMessage("");
+    }, 2000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [copyMessage]);
+
+  const isOnline = Boolean(serverData?.online);
+  const resolvedIp = serverData?.ip ?? "Unknown";
+  const port = serverData?.port ?? 25565;
+  const onlinePlayers = serverData?.players?.online;
+  const maxPlayers = serverData?.players?.max;
+  const version = serverData?.version || (isOnline ? "Unknown" : "Unavailable");
+  const software = serverData?.software || (isOnline ? "Unknown" : "Unavailable");
+  const motd = parseMotd(serverData);
+
+  const playerList = useMemo<string[]>(() => {
+    const rawList = serverData?.players?.list;
+    return Array.isArray(rawList) ? rawList.filter(Boolean) : [];
+  }, [serverData?.players?.list]);
+
+  const handleCopyIp = async (): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(SERVER_ADDRESS);
+      setCopyMessage("Server address copied.");
+    } catch {
+      setCopyMessage("Could not copy automatically.");
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-950/30 via-slate-950 to-violet-950/20" />
+      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0)", backgroundSize: "28px 28px" }} />
+
+      <main className="relative mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-10">
+        <section className="mb-6 overflow-hidden rounded-3xl border border-cyan-400/15 bg-slate-950/60 shadow-2xl backdrop-blur-xl">
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="border-b border-white/10 p-6 md:p-8 lg:border-b-0 lg:border-r lg:p-10">
+              <div className="mb-4 inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.28em] text-cyan-300">
+                Celestial Network
+              </div>
+
+              <h1 className="mb-4 text-4xl font-black leading-[0.92] tracking-tight text-white md:text-6xl">
+                DrCelestial
+                <span className="block bg-gradient-to-r from-cyan-300 via-sky-300 to-violet-400 bg-clip-text text-transparent">
+                  Starport Status
+                </span>
+              </h1>
+
+              <p className="mb-6 max-w-2xl text-lg leading-relaxed text-slate-300">
+                A cosmic server hub with live stats, join details, player activity, and a celestial identity built around your name.
+              </p>
+
+              <div className="mb-5 flex flex-wrap gap-3">
+                <button
+                  onClick={() => void fetchStats()}
+                  disabled={status === "loading"}
+                  className="rounded-2xl border border-cyan-300/30 bg-gradient-to-r from-cyan-300 to-sky-400 px-5 py-3 text-sm font-black uppercase tracking-wide text-slate-950 transition hover:brightness-110 disabled:opacity-60"
+                >
+                  {status === "loading" ? "Scanning" : "Refresh Status"}
+                </button>
+
+                <button
+                  onClick={() => void handleCopyIp()}
+                  className="rounded-2xl border border-violet-400/25 bg-violet-400/10 px-5 py-3 text-sm font-black uppercase tracking-wide text-violet-100 transition hover:bg-violet-400/15"
+                >
+                  Copy IP
+                </button>
+
+                <div
+                  className={[
+                    "rounded-2xl border px-4 py-3 text-sm font-black uppercase tracking-wide",
+                    isOnline
+                      ? "border-emerald-400/25 bg-emerald-400/10 text-emerald-200"
+                      : "border-rose-400/20 bg-rose-400/10 text-rose-200",
+                  ].join(" ")}
+                >
+                  {isOnline ? "Online" : "Offline"}
+                </div>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <InfoCard label="Address" value={SERVER_ADDRESS} />
+                <InfoCard label="Resolved IP" value={resolvedIp} />
+                <InfoCard label="Port" value={String(port)} />
+                <InfoCard label="Auto Refresh" value="2 Minutes" />
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-4 sm:col-span-2">
+                  <div className="mb-1 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">Last Scan</div>
+                  <div className="font-bold text-white">{lastUpdated ? lastUpdated.toLocaleTimeString() : "Waiting for first fetch"}</div>
+                </div>
+              </div>
+
+              {copyMessage && !error ? (
+                <div className="mt-5 rounded-2xl border border-sky-400/20 bg-sky-400/10 px-4 py-3 font-semibold text-sky-100">
+                  {copyMessage}
+                </div>
+              ) : null}
+
+              {error ? (
+                <div className="mt-5 rounded-2xl border border-rose-400/20 bg-rose-400/10 px-4 py-3 font-semibold text-rose-200">
+                  {error}
+                </div>
+              ) : null}
+
+              {status === "loading" ? (
+                <div className="mt-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 font-semibold uppercase tracking-wide text-cyan-100">
+                  Scanning the starport...
+                </div>
+              ) : null}
+            </div>
+
+            <div className="bg-gradient-to-b from-white/[0.04] to-white/[0.02] p-6 md:p-8 lg:p-10">
+              <div className="grid gap-4">
+                <div className="rounded-[1.75rem] border border-cyan-400/15 bg-black/20 p-5">
+                  <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">Players Online</div>
+                  <div className="text-5xl font-black leading-none text-white md:text-6xl">
+                    {formatNumber(onlinePlayers)}
+                    <span className="text-2xl text-slate-400"> / {formatNumber(maxPlayers)}</span>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <InfoPanel label="Version" value={version} />
+                  <InfoPanel label="Software" value={software} />
+                </div>
+
+                <div className="rounded-[1.5rem] border border-violet-400/20 bg-gradient-to-r from-violet-500/10 to-cyan-400/10 p-5">
+                  <div className="mb-2 text-sm font-black uppercase tracking-[0.16em] text-violet-200">Quick Join</div>
+                  <div className="break-all text-xl font-black text-white md:text-2xl">{SERVER_ADDRESS}</div>
+                  <div className="mt-2 text-slate-300">Use this address in Minecraft Multiplayer to dock at the server.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-6 xl:grid-cols-[1fr_0.9fr]">
+          <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-xl">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-2xl font-black text-white md:text-3xl">Message of the Stars</h2>
+              <span className="text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">Transmission</span>
+            </div>
+            <div className="min-h-28 rounded-[1.5rem] border border-white/10 bg-black/20 p-5 leading-relaxed text-slate-200">
+              {motd}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-2xl backdrop-blur-xl">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h2 className="text-2xl font-black text-white md:text-3xl">Active Travelers</h2>
+              <span className="text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">Roster</span>
+            </div>
+            {playerList.length > 0 ? (
+              <div className="flex flex-wrap gap-3">
+                {playerList.map((player) => (
+                  <div key={player} className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-2 font-bold tracking-wide text-cyan-100">
+                    {player}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-[1.5rem] border border-dashed border-white/10 bg-black/20 p-5 text-slate-400">
+                No player names are currently available.
+              </div>
+            )}
+          </div>
+        </section>
+              <section className="mt-6 rounded-3xl border border-white/10 bg-black/40 p-6 shadow-2xl backdrop-blur-xl">
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="text-xl md:text-2xl font-black text-white">Console Preview</h2>
+            <span className="text-xs uppercase tracking-[0.2em] text-cyan-300">Raw JSON</span>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-black/80 p-4 overflow-auto max-h-[400px] text-xs font-mono text-green-300">
+            <pre>
+{JSON.stringify({
+  status,
+  error,
+  lastUpdated: lastUpdated ? lastUpdated.toISOString() : null,
+  data: serverData
+}, null, 2)}
+            </pre>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+type SmallCardProps = {
+  label: string;
+  value: string;
+};
+
+function InfoCard({ label, value }: SmallCardProps): JSX.Element {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+      <div className="mb-1 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">{label}</div>
+      <div className="break-all font-bold text-white">{value}</div>
+    </div>
+  );
+}
+
+function InfoPanel({ label, value }: SmallCardProps): JSX.Element {
+  return (
+    <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+      <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-300">{label}</div>
+      <div className="break-words text-2xl font-black text-white md:text-3xl">{value}</div>
+    </div>
+  );
+}
+
+/*
+Manual test cases:
+1. API returns valid JSON with online=true -> show Online badge, players, version, software, and MOTD.
+2. API returns valid JSON with online=false -> show Offline badge and fallback values.
+3. API returns non-JSON -> show error message "Backend did not return JSON. Is your API running?".
+4. Refresh button during active fetch -> button label changes to "Scanning" and becomes disabled.
+5. Copy IP button success -> copies play.drcelestial.net and shows a temporary confirmation message.
+6. Copy IP button failure -> shows "Could not copy automatically.".
+7. Interval cleanup -> no duplicate polling after component unmount/remount.
+8. Missing players.list -> roster panel shows the fallback empty-state message.
+*/
