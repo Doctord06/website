@@ -13,11 +13,10 @@
 </head>
 <body>
   <div class="scene">
-    <div class="slime-layer" aria-hidden="true">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-      <div class="blob blob-4"></div>
+    <div class="background-glow" aria-hidden="true">
+      <div class="glow glow-1"></div>
+      <div class="glow glow-2"></div>
+      <div class="glow glow-3"></div>
     </div>
 
     <div class="page-slime" aria-hidden="true">
@@ -26,50 +25,35 @@
       <div class="slime-stream stream-3"></div>
     </div>
 
-    <div class="top-drip top-drip-1" aria-hidden="true"></div>
-    <div class="top-drip top-drip-2" aria-hidden="true"></div>
-    <div class="top-drip top-drip-3" aria-hidden="true"></div>
-
     <main class="hero">
       <section class="hero-card">
+        <!-- slime hanging from top of card -->
+        <div class="friend friend-top">
+          <span class="eye left"></span>
+          <span class="eye right"></span>
+        </div>
+
         <div class="hero-art">
           <div class="character-wrap">
+            <!-- replace this later with Chap PNG if you want -->
             <div class="chap-placeholder" aria-hidden="true">
+              <div class="chap-eye left"></div>
+              <div class="chap-eye right"></div>
               <div class="chap-drip chap-drip-1"></div>
               <div class="chap-drip chap-drip-2"></div>
               <div class="chap-drip chap-drip-3"></div>
-              <div class="chap-eye left"></div>
-              <div class="chap-eye right"></div>
-            </div>
-
-            <div class="friend friend-1">
-              <span class="eye left"></span>
-              <span class="eye right"></span>
-              <span class="drip d1"></span>
-              <span class="drip d2"></span>
-              <span class="drip d3"></span>
-            </div>
-
-            <div class="friend friend-2">
-              <span class="eye left"></span>
-              <span class="eye right"></span>
-              <span class="drip d1"></span>
-              <span class="drip d2"></span>
-              <span class="drip d3"></span>
-            </div>
-
-            <div class="friend friend-3">
-              <span class="eye left"></span>
-              <span class="eye right"></span>
-              <span class="drip d1"></span>
-              <span class="drip d2"></span>
-              <span class="drip d3"></span>
             </div>
           </div>
         </div>
 
         <div class="hero-text">
           <div class="slime-stop slime-stop-pill">
+            <!-- slime sitting on the tag -->
+            <div class="friend friend-tag">
+              <span class="eye left"></span>
+              <span class="eye right"></span>
+            </div>
+
             <span class="tag">Streamer • Slime • Yellow</span>
           </div>
 
@@ -89,14 +73,18 @@
           </div>
 
           <div class="button-row">
-            <a class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Watch Stream</a>
-            <a class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">Join Discord</a>
+            <a class="btn btn-primary" href="#">Watch Stream</a>
+            <a class="btn btn-secondary" href="#">Join Discord</a>
           </div>
+        </div>
+
+        <!-- slime hanging off card edge -->
+        <div class="friend friend-edge">
+          <span class="eye left"></span>
+          <span class="eye right"></span>
         </div>
       </section>
     </main>
   </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
