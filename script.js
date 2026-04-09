@@ -1,13 +1,13 @@
-const friends = document.querySelectorAll('.friend');
+const buddies = document.querySelectorAll('.slime-buddy');
 const buttons = document.querySelectorAll('.btn');
 
-friends.forEach((friend) => {
-  friend.addEventListener('mouseenter', () => {
-    friend.style.transform = 'scale(1.08)';
+buddies.forEach((buddy) => {
+  buddy.addEventListener('mouseenter', () => {
+    buddy.style.transform = 'scale(1.08)';
   });
 
-  friend.addEventListener('mouseleave', () => {
-    friend.style.transform = '';
+  buddy.addEventListener('mouseleave', () => {
+    buddy.style.transform = '';
   });
 });
 
