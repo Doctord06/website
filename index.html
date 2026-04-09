@@ -12,79 +12,220 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="scene">
-    <div class="background-glow" aria-hidden="true">
-      <div class="glow glow-1"></div>
-      <div class="glow glow-2"></div>
-      <div class="glow glow-3"></div>
-    </div>
+  <div class="page">
 
-    <div class="page-slime" aria-hidden="true">
-      <div class="slime-stream stream-1"></div>
-      <div class="slime-stream stream-2"></div>
-      <div class="slime-stream stream-3"></div>
+    <!-- Background slime streams -->
+    <div class="slime-bg" aria-hidden="true">
+      <svg class="slime-river river-1" viewBox="0 0 200 900" preserveAspectRatio="none">
+        <path d="M35 0
+                 C 20 80, 55 120, 45 200
+                 C 35 280, 20 350, 40 440
+                 C 60 530, 30 620, 55 720
+                 C 75 800, 60 860, 80 900
+                 L 165 900
+                 C 145 860, 160 790, 145 710
+                 C 130 620, 165 540, 145 450
+                 C 125 360, 155 280, 140 190
+                 C 125 110, 165 70, 150 0 Z" />
+      </svg>
+
+      <svg class="slime-river river-2" viewBox="0 0 220 900" preserveAspectRatio="none">
+        <path d="M45 0
+                 C 25 90, 70 140, 58 230
+                 C 48 310, 22 390, 50 485
+                 C 74 570, 38 665, 65 760
+                 C 82 825, 70 870, 95 900
+                 L 185 900
+                 C 160 860, 175 805, 160 735
+                 C 145 650, 185 575, 162 490
+                 C 140 400, 178 320, 156 228
+                 C 136 138, 185 80, 165 0 Z" />
+      </svg>
+
+      <svg class="slime-river river-3" viewBox="0 0 200 900" preserveAspectRatio="none">
+        <path d="M40 0
+                 C 18 75, 60 125, 48 205
+                 C 36 290, 18 370, 42 455
+                 C 66 535, 32 635, 58 730
+                 C 74 800, 60 860, 88 900
+                 L 162 900
+                 C 140 860, 155 800, 142 722
+                 C 130 642, 166 545, 145 458
+                 C 122 365, 156 285, 142 205
+                 C 128 120, 170 75, 148 0 Z" />
+      </svg>
     </div>
 
     <main class="hero">
       <section class="hero-card">
-        <!-- slime hanging from top of card -->
-        <div class="friend friend-top">
-          <span class="eye left"></span>
-          <span class="eye right"></span>
+
+        <!-- Top card slime -->
+        <div class="card-slime-top" aria-hidden="true">
+          <svg viewBox="0 0 320 120" preserveAspectRatio="none">
+            <path d="M0 0 H320 V22
+                     C300 22, 294 52, 278 52
+                     C261 52, 260 28, 245 28
+                     C231 28, 228 80, 208 80
+                     C188 80, 185 38, 170 38
+                     C154 38, 152 60, 136 60
+                     C120 60, 118 26, 100 26
+                     C82 26, 80 74, 58 74
+                     C36 74, 32 22, 0 22 Z"/>
+          </svg>
+        </div>
+
+        <!-- Edge slime buddy -->
+        <div class="slime-buddy edge-buddy" aria-hidden="true">
+          <svg viewBox="0 0 120 110">
+            <path class="buddy-body"
+              d="M20 25
+                 C20 10, 38 6, 58 8
+                 C82 10, 100 18, 100 38
+                 C100 55, 92 68, 90 79
+                 C88 93, 77 102, 58 102
+                 C40 102, 28 96, 26 82
+                 C24 70, 16 60, 16 42
+                 C16 34, 18 29, 20 25 Z"/>
+            <path class="buddy-drip"
+              d="M48 88
+                 C48 88, 44 100, 47 108
+                 C50 114, 60 114, 63 107
+                 C66 99, 61 88, 61 88 Z"/>
+            <circle class="buddy-eye" cx="44" cy="47" r="4"/>
+            <circle class="buddy-eye" cx="67" cy="47" r="4"/>
+            <ellipse class="buddy-highlight" cx="40" cy="28" rx="13" ry="8"/>
+          </svg>
         </div>
 
         <div class="hero-art">
-          <div class="character-wrap">
-            <!-- replace this later with Chap PNG if you want -->
-            <div class="chap-placeholder" aria-hidden="true">
-              <div class="chap-eye left"></div>
-              <div class="chap-eye right"></div>
-              <div class="chap-drip chap-drip-1"></div>
-              <div class="chap-drip chap-drip-2"></div>
-              <div class="chap-drip chap-drip-3"></div>
+          <div class="character-stage">
+
+            <!-- Main Chap placeholder -->
+            <div class="chap-core" aria-hidden="true">
+              <svg viewBox="0 0 280 280">
+                <path class="chap-body"
+                  d="M56 60
+                     C56 28, 90 14, 140 14
+                     C193 14, 224 32, 224 70
+                     C224 98, 212 118, 210 143
+                     C208 168, 216 183, 212 202
+                     C206 230, 182 252, 140 252
+                     C96 252, 72 232, 68 204
+                     C65 182, 74 168, 72 144
+                     C70 118, 56 96, 56 60 Z"/>
+                <path class="chap-drip drip-a"
+                  d="M92 224
+                     C92 224, 84 240, 88 254
+                     C92 266, 108 266, 112 254
+                     C116 242, 109 224, 109 224 Z"/>
+                <path class="chap-drip drip-b"
+                  d="M134 232
+                     C134 232, 126 254, 131 270
+                     C136 282, 154 282, 158 268
+                     C161 254, 154 232, 154 232 Z"/>
+                <path class="chap-drip drip-c"
+                  d="M180 224
+                     C180 224, 173 239, 177 250
+                     C181 260, 195 260, 199 250
+                     C202 239, 196 224, 196 224 Z"/>
+                <ellipse class="chap-highlight" cx="105" cy="74" rx="34" ry="22"/>
+                <circle class="chap-eye" cx="118" cy="114" r="7"/>
+                <circle class="chap-eye" cx="162" cy="114" r="7"/>
+              </svg>
             </div>
+
+            <!-- Tiny companion 1 -->
+            <div class="slime-buddy buddy-head" aria-hidden="true">
+              <svg viewBox="0 0 120 110">
+                <path class="buddy-body"
+                  d="M22 28
+                     C22 14, 38 10, 57 11
+                     C81 12, 98 20, 98 39
+                     C98 54, 90 66, 89 77
+                     C88 92, 75 101, 56 101
+                     C37 101, 26 94, 24 80
+                     C22 67, 17 57, 17 42
+                     C17 35, 19 31, 22 28 Z"/>
+                <path class="buddy-drip"
+                  d="M52 87
+                     C52 87, 48 98, 51 105
+                     C54 111, 63 111, 66 104
+                     C69 97, 64 87, 64 87 Z"/>
+                <circle class="buddy-eye" cx="46" cy="46" r="4"/>
+                <circle class="buddy-eye" cx="68" cy="46" r="4"/>
+                <ellipse class="buddy-highlight" cx="42" cy="30" rx="12" ry="7"/>
+              </svg>
+            </div>
+
+            <!-- Tiny companion 2 -->
+            <div class="slime-buddy buddy-shoulder" aria-hidden="true">
+              <svg viewBox="0 0 120 110">
+                <path class="buddy-body"
+                  d="M21 30
+                     C21 16, 37 12, 57 13
+                     C80 14, 97 22, 97 40
+                     C97 55, 91 68, 88 79
+                     C85 93, 74 100, 56 100
+                     C40 100, 28 95, 24 83
+                     C20 70, 16 57, 16 42
+                     C16 36, 18 32, 21 30 Z"/>
+                <path class="buddy-drip"
+                  d="M37 85
+                     C37 85, 33 96, 36 104
+                     C39 110, 48 110, 51 103
+                     C54 96, 49 85, 49 85 Z"/>
+                <circle class="buddy-eye" cx="44" cy="45" r="4"/>
+                <circle class="buddy-eye" cx="66" cy="45" r="4"/>
+                <ellipse class="buddy-highlight" cx="40" cy="30" rx="12" ry="7"/>
+              </svg>
+            </div>
+
           </div>
         </div>
 
         <div class="hero-text">
-          <div class="slime-stop slime-stop-pill">
-            <!-- slime sitting on the tag -->
-            <div class="friend friend-tag">
-              <span class="eye left"></span>
-              <span class="eye right"></span>
+          <div class="tag-wrap">
+            <div class="slime-buddy buddy-tag" aria-hidden="true">
+              <svg viewBox="0 0 120 110">
+                <path class="buddy-body"
+                  d="M24 30
+                     C24 16, 39 12, 58 12
+                     C81 12, 96 19, 96 38
+                     C96 53, 91 64, 89 75
+                     C87 91, 74 99, 56 99
+                     C39 99, 28 93, 25 80
+                     C22 67, 19 57, 19 43
+                     C19 36, 21 32, 24 30 Z"/>
+                <path class="buddy-drip"
+                  d="M58 86
+                     C58 86, 53 98, 56 106
+                     C59 112, 69 112, 72 104
+                     C75 96, 70 86, 70 86 Z"/>
+                <circle class="buddy-eye" cx="46" cy="45" r="4"/>
+                <circle class="buddy-eye" cx="68" cy="45" r="4"/>
+                <ellipse class="buddy-highlight" cx="42" cy="30" rx="12" ry="7"/>
+              </svg>
             </div>
 
             <span class="tag">Streamer • Slime • Yellow</span>
           </div>
 
-          <div class="slime-stop slime-stop-title">
-            <h1>Chap</h1>
-          </div>
-
-          <div class="slime-stop slime-stop-subtitle">
-            <p class="subtitle">just vibing... slightly sticky</p>
-          </div>
-
-          <div class="slime-stop slime-stop-description">
-            <p class="description">
-              A yellow slime streamer with tiny slime ball friends always hanging around.
-              Soft chaos. Gooey vibes. Good times.
-            </p>
-          </div>
+          <h1>Chap</h1>
+          <p class="subtitle">just vibing... slightly sticky</p>
+          <p class="description">
+            A yellow slime streamer with tiny slime companions always hanging around.
+            Thick goo, soft chaos, clean visuals.
+          </p>
 
           <div class="button-row">
-            <a class="btn btn-primary" href="#">Watch Stream</a>
-            <a class="btn btn-secondary" href="#">Join Discord</a>
+            <a href="#" class="btn btn-primary">Watch Stream</a>
+            <a href="#" class="btn btn-secondary">Join Discord</a>
           </div>
-        </div>
-
-        <!-- slime hanging off card edge -->
-        <div class="friend friend-edge">
-          <span class="eye left"></span>
-          <span class="eye right"></span>
         </div>
       </section>
     </main>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
