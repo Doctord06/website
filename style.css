@@ -1,13 +1,13 @@
 :root {
   --bg-top: #fff9dc;
-  --bg-bottom: #f7d84f;
+  --bg-bottom: #f8d64b;
   --yellow-1: #fff3a6;
   --yellow-2: #ffd84d;
   --yellow-3: #f4b400;
   --yellow-4: #d99600;
   --text-main: #2f2818;
   --text-soft: #5c5033;
-  --card-bg: rgba(255, 248, 220, 0.72);
+  --card-bg: rgba(255, 248, 223, 0.72);
   --card-border: rgba(214, 174, 27, 0.22);
   --shadow: 0 20px 50px rgba(120, 85, 0, 0.16);
 }
@@ -26,8 +26,7 @@ body {
   font-family: 'Inter', sans-serif;
   color: var(--text-main);
   background:
-    radial-gradient(circle at 50% 15%, rgba(255, 226, 95, 0.28), transparent 26%),
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 28%),
+    radial-gradient(circle at 50% 12%, rgba(255, 222, 90, 0.22), transparent 24%),
     linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
   overflow-x: hidden;
 }
@@ -38,67 +37,59 @@ body {
   overflow: hidden;
 }
 
-/* ambient blobs */
-.slime-layer {
+/* soft background glow */
+.background-glow {
   position: absolute;
   inset: 0;
-  z-index: 0;
   pointer-events: none;
+  z-index: 0;
 }
 
-.blob {
+.glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(42px);
-  opacity: 0.28;
-  background: radial-gradient(circle at 30% 30%, #fff5bf 0%, #ffd84d 45%, #f4b400 100%);
-  animation: floatBlob 16s ease-in-out infinite;
+  filter: blur(40px);
+  opacity: 0.26;
+  background: radial-gradient(circle at 30% 30%, #fff4b8 0%, #ffd84d 45%, #f4b400 100%);
+  animation: floatGlow 14s ease-in-out infinite;
 }
 
-.blob-1 {
-  width: 240px;
-  height: 240px;
-  top: 8%;
+.glow-1 {
+  width: 220px;
+  height: 220px;
+  top: 7%;
   left: 6%;
 }
 
-.blob-2 {
+.glow-2 {
   width: 280px;
   height: 280px;
-  top: 12%;
-  right: 9%;
+  top: 15%;
+  right: 10%;
   animation-delay: 3s;
 }
 
-.blob-3 {
-  width: 220px;
-  height: 220px;
-  bottom: 12%;
-  left: 10%;
+.glow-3 {
+  width: 240px;
+  height: 240px;
+  bottom: 10%;
+  left: 12%;
   animation-delay: 6s;
 }
 
-.blob-4 {
-  width: 260px;
-  height: 260px;
-  bottom: 10%;
-  right: 14%;
-  animation-delay: 9s;
-}
-
-@keyframes floatBlob {
+@keyframes floatGlow {
   0% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translate3d(24px, -36px, 0) scale(1.08);
+    transform: translateY(-24px) scale(1.08);
   }
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
-/* slime streams */
+/* page slime streams */
 .page-slime {
   position: absolute;
   inset: 0;
@@ -109,19 +100,36 @@ body {
 
 .slime-stream {
   position: absolute;
-  top: -120px;
-  width: 180px;
-  height: 160vh;
+  top: -80px;
+  width: 170px;
+  height: 150vh;
   background: linear-gradient(
     180deg,
-    rgba(255, 235, 125, 0.98) 0%,
-    rgba(255, 210, 45, 0.94) 25%,
-    rgba(240, 170, 0, 0.84) 100%
+    rgba(255, 237, 130, 0.95) 0%,
+    rgba(255, 214, 55, 0.92) 28%,
+    rgba(240, 172, 0, 0.86) 100%
   );
-  border-radius: 80px 80px 55px 55px / 20px 20px 96px 96px;
-  opacity: 0.92;
-  filter: drop-shadow(0 10px 18px rgba(186, 131, 0, 0.2));
+  opacity: 0.9;
+  filter: drop-shadow(0 10px 18px rgba(180, 125, 0, 0.18));
   animation: slimePour 7s ease-in-out infinite;
+}
+
+.stream-1 {
+  left: 3%;
+  border-radius: 42% 58% 48% 52% / 10% 10% 88% 92%;
+}
+
+.stream-2 {
+  left: 40%;
+  width: 190px;
+  border-radius: 52% 48% 45% 55% / 8% 8% 92% 88%;
+  animation-delay: 1.5s;
+}
+
+.stream-3 {
+  right: 4%;
+  border-radius: 46% 54% 50% 50% / 10% 10% 86% 94%;
+  animation-delay: 3s;
 }
 
 .slime-stream::before {
@@ -131,102 +139,42 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 112%;
-  height: 130px;
+  height: 120px;
   background: inherit;
-  border-radius: 0 0 90px 90px;
+  border-radius: 0 0 80px 80px;
 }
 
 .slime-stream::after {
   content: "";
   position: absolute;
-  bottom: -34px;
+  bottom: -28px;
   left: 50%;
   transform: translateX(-50%);
-  width: 92px;
-  height: 92px;
+  width: 82px;
+  height: 82px;
   border-radius: 50%;
   background: rgba(244, 180, 0, 0.96);
   box-shadow:
-    inset -10px -12px 16px rgba(170, 110, 0, 0.16),
-    0 8px 18px rgba(170, 110, 0, 0.18);
-}
-
-.stream-1 {
-  left: 4%;
-  animation-delay: 0s;
-}
-
-.stream-2 {
-  left: 39%;
-  width: 200px;
-  animation-delay: 1.5s;
-}
-
-.stream-3 {
-  right: 4%;
-  animation-delay: 3s;
+    inset -10px -12px 16px rgba(170, 110, 0, 0.14),
+    0 8px 18px rgba(170, 110, 0, 0.16);
 }
 
 @keyframes slimePour {
   0% {
-    transform: translateY(-10px) scaleY(1);
-    border-radius: 78px 82px 52px 58px / 20px 20px 86px 88px;
+    transform: translateY(-8px) scaleY(1);
   }
   50% {
-    transform: translateY(18px) scaleY(1.06);
-    border-radius: 88px 72px 64px 46px / 20px 20px 108px 62px;
+    transform: translateY(16px) scaleY(1.05);
   }
   100% {
-    transform: translateY(-10px) scaleY(1);
-    border-radius: 78px 82px 52px 58px / 20px 20px 86px 88px;
+    transform: translateY(-8px) scaleY(1);
   }
 }
 
-/* top drips */
-.top-drip {
-  position: absolute;
-  top: -28px;
-  background: linear-gradient(180deg, #ffe888 0%, #f4b400 100%);
-  border-radius: 0 0 60px 60px;
-  z-index: 2;
-  opacity: 0.95;
-  box-shadow: 0 10px 25px rgba(140, 100, 0, 0.12);
-}
-
-.top-drip::after {
-  content: "";
-  position: absolute;
-  bottom: -24px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #f4b400;
-}
-
-.top-drip-1 {
-  left: 9%;
-  width: 110px;
-  height: 110px;
-}
-
-.top-drip-2 {
-  left: 46%;
-  width: 92px;
-  height: 82px;
-}
-
-.top-drip-3 {
-  right: 10%;
-  width: 126px;
-  height: 128px;
-}
-
-/* hero */
+/* main hero */
 .hero {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -248,6 +196,7 @@ body {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   padding: 40px;
+  overflow: visible;
 }
 
 /* art side */
@@ -259,8 +208,7 @@ body {
 
 .character-wrap {
   position: relative;
-  z-index: 4;
-  width: min(430px, 100%);
+  width: min(420px, 100%);
   aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
@@ -270,20 +218,19 @@ body {
 .character-wrap::before {
   content: "";
   position: absolute;
-  width: 84%;
-  height: 84%;
+  width: 82%;
+  height: 82%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(255, 241, 178, 0.96) 0%,
-    rgba(255, 216, 77, 0.56) 56%,
+    rgba(255, 241, 178, 0.95) 0%,
+    rgba(255, 216, 77, 0.52) 56%,
     rgba(244, 180, 0, 0.14) 100%
   );
   filter: blur(8px);
   z-index: 0;
 }
 
-/* main placeholder slime */
 .chap-placeholder {
   position: relative;
   z-index: 1;
@@ -296,8 +243,8 @@ body {
     inset -18px -20px 25px rgba(185, 125, 0, 0.15),
     inset 12px 14px 20px rgba(255, 255, 255, 0.16),
     0 20px 35px rgba(120, 85, 0, 0.14);
-  border-radius: 47% 53% 46% 54% / 40% 38% 62% 60%;
-  animation: bigSlimeWobble 5s ease-in-out infinite;
+  border-radius: 46% 54% 43% 57% / 36% 34% 66% 64%;
+  animation: mainGoo 5s ease-in-out infinite;
 }
 
 .chap-eye {
@@ -342,7 +289,7 @@ body {
 .chap-drip-1 {
   left: 18%;
   width: 18px;
-  height: 24px;
+  height: 22px;
 }
 
 .chap-drip-2 {
@@ -354,207 +301,84 @@ body {
 .chap-drip-3 {
   right: 18%;
   width: 20px;
-  height: 20px;
+  height: 18px;
 }
 
-@keyframes bigSlimeWobble {
+@keyframes mainGoo {
   0% {
     transform: translateY(0) rotate(0deg) scale(1, 1);
-    border-radius: 47% 53% 46% 54% / 40% 38% 62% 60%;
+    border-radius: 46% 54% 43% 57% / 36% 34% 66% 64%;
   }
   25% {
     transform: translateY(-4px) rotate(-1deg) scale(1.02, 0.97);
-    border-radius: 53% 47% 51% 49% / 46% 35% 65% 54%;
+    border-radius: 52% 48% 50% 50% / 42% 32% 68% 58%;
   }
   50% {
-    transform: translateY(-9px) rotate(1deg) scale(0.98, 1.04);
-    border-radius: 42% 58% 44% 56% / 58% 40% 60% 42%;
+    transform: translateY(-9px) rotate(1deg) scale(0.98, 1.05);
+    border-radius: 40% 60% 42% 58% / 56% 36% 64% 44%;
   }
   75% {
     transform: translateY(-3px) rotate(2deg) scale(1.01, 0.98);
-    border-radius: 51% 49% 55% 45% / 44% 56% 44% 56%;
+    border-radius: 50% 50% 56% 44% / 40% 52% 48% 60%;
   }
   100% {
     transform: translateY(0) rotate(0deg) scale(1, 1);
-    border-radius: 47% 53% 46% 54% / 40% 38% 62% 60%;
+    border-radius: 46% 54% 43% 57% / 36% 34% 66% 64%;
   }
 }
 
-/* slime friends */
-.friend {
-  position: absolute;
-  z-index: 3;
-  width: 64px;
-  height: 54px;
-  overflow: visible;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255,255,255,0.38) 0 18%, transparent 19%),
-    radial-gradient(circle at 40% 30%, #fff2a6 0%, #ffd84d 42%, #f4b400 78%, #de9f00 100%);
-  box-shadow:
-    inset -10px -12px 16px rgba(165, 108, 0, 0.18),
-    inset 8px 10px 14px rgba(255,255,255,0.14),
-    0 12px 20px rgba(120, 85, 0, 0.18);
-  filter: drop-shadow(0 8px 14px rgba(180, 130, 0, 0.16));
-  border-radius: 48% 52% 46% 54% / 42% 40% 60% 58%;
-  animation: slimeBlob 3.8s ease-in-out infinite;
-}
-
-.friend .eye {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(42, 36, 24, 0.72);
-  top: 21px;
-  z-index: 3;
-}
-
-.friend .eye.left {
-  left: 22px;
-}
-
-.friend .eye.right {
-  right: 20px;
-}
-
-.friend .drip {
-  position: absolute;
-  bottom: -8px;
-  background: linear-gradient(180deg, #ffd84d 0%, #f4b400 100%);
-  border-radius: 0 0 12px 12px;
-  z-index: 1;
-  box-shadow: inset -3px -4px 6px rgba(165, 108, 0, 0.12);
-}
-
-.friend .drip::after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #f4b400;
-}
-
-.friend .drip.d1 {
-  left: 12px;
-  width: 12px;
-  height: 14px;
-}
-
-.friend .drip.d2 {
-  left: 30px;
-  width: 10px;
-  height: 20px;
-}
-
-.friend .drip.d3 {
-  right: 10px;
-  width: 12px;
-  height: 12px;
-}
-
-.friend-1 {
-  left: 8%;
-  top: 62%;
-  animation-delay: 0s;
-}
-
-.friend-2 {
-  width: 50px;
-  height: 46px;
-  right: 12%;
-  top: 18%;
-  animation-delay: 1s;
-}
-
-.friend-2 .eye {
-  top: 17px;
-}
-
-.friend-2 .eye.left {
-  left: 16px;
-}
-
-.friend-2 .eye.right {
-  right: 14px;
-}
-
-.friend-2 .drip.d1 {
-  left: 8px;
-}
-
-.friend-2 .drip.d2 {
-  left: 22px;
-}
-
-.friend-2 .drip.d3 {
-  right: 7px;
-}
-
-.friend-3 {
-  width: 70px;
-  height: 58px;
-  right: 3%;
-  bottom: 16%;
-  animation-delay: 2s;
-}
-
-.friend-3 .eye {
-  top: 22px;
-}
-
-.friend-3 .eye.left {
-  left: 24px;
-}
-
-.friend-3 .eye.right {
-  right: 22px;
-}
-
-.friend-3 .drip.d1 {
-  left: 13px;
-}
-
-.friend-3 .drip.d2 {
-  left: 34px;
-  height: 22px;
-}
-
-.friend-3 .drip.d3 {
-  right: 11px;
-}
-
-@keyframes slimeBlob {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1, 1);
-    border-radius: 48% 52% 46% 54% / 42% 40% 60% 58%;
-  }
-  25% {
-    transform: translateY(-2px) rotate(-2deg) scale(1.03, 0.95);
-    border-radius: 54% 46% 50% 50% / 48% 38% 62% 52%;
-  }
-  50% {
-    transform: translateY(-5px) rotate(1deg) scale(0.97, 1.04);
-    border-radius: 42% 58% 44% 56% / 58% 42% 58% 42%;
-  }
-  75% {
-    transform: translateY(-1px) rotate(2deg) scale(1.02, 0.98);
-    border-radius: 52% 48% 56% 44% / 44% 54% 46% 56%;
-  }
-  100% {
-    transform: translateY(0) rotate(0deg) scale(1, 1);
-    border-radius: 48% 52% 46% 54% / 42% 40% 60% 58%;
-  }
-}
-
-/* text */
+/* text side */
 .hero-text {
   position: relative;
   z-index: 4;
   text-align: center;
+}
+
+.slime-stop {
+  position: relative;
+  display: inline-block;
+  z-index: 4;
+}
+
+.slime-stop + .slime-stop {
+  margin-top: 12px;
+}
+
+.slime-stop-description {
+  display: block;
+  margin-top: 16px;
+}
+
+.slime-stop-pill {
+  position: relative;
+  overflow: visible;
+}
+
+.slime-stop::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -12px;
+  width: calc(100% + 24px);
+  height: 18px;
+  background: linear-gradient(180deg, rgba(255, 222, 70, 0.78) 0%, rgba(244, 180, 0, 0.58) 100%);
+  border-radius: 16px 16px 12px 12px;
+  z-index: -1;
+  box-shadow: 0 4px 8px rgba(170, 110, 0, 0.08);
+}
+
+.slime-stop::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 22%;
+  width: 14px;
+  height: 14px;
+  background: rgba(244, 180, 0, 0.72);
+  border-radius: 0 0 10px 10px;
+  box-shadow: 48px 2px 0 rgba(244, 180, 0, 0.68);
+  z-index: -1;
 }
 
 .tag {
@@ -599,50 +423,6 @@ body {
   color: rgba(42, 36, 24, 0.82);
 }
 
-.slime-stop {
-  position: relative;
-  display: inline-block;
-  z-index: 4;
-}
-
-.slime-stop + .slime-stop {
-  margin-top: 12px;
-}
-
-.slime-stop-description {
-  display: block;
-  margin-top: 16px;
-}
-
-.slime-stop::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: -20px;
-  width: calc(100% + 34px);
-  height: 30px;
-  background: linear-gradient(180deg, rgba(255, 222, 70, 0.98) 0%, rgba(244, 180, 0, 0.92) 100%);
-  border-radius: 18px 18px 16px 16px;
-  z-index: -1;
-  box-shadow: 0 6px 12px rgba(170, 110, 0, 0.12);
-}
-
-.slime-stop::after {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 16%;
-  width: 20px;
-  height: 26px;
-  background: rgba(244, 180, 0, 0.95);
-  border-radius: 0 0 16px 16px;
-  box-shadow:
-    56px 3px 0 rgba(244, 180, 0, 0.9),
-    116px -1px 0 rgba(244, 180, 0, 0.92);
-  z-index: -1;
-}
-
 /* buttons */
 .button-row {
   display: flex;
@@ -683,6 +463,166 @@ body {
   color: var(--text-main);
   background: rgba(255, 255, 255, 0.52);
   border: 1px solid rgba(200, 160, 30, 0.18);
+}
+
+/* goo creatures */
+.friend {
+  position: absolute;
+  z-index: 6;
+  background:
+    radial-gradient(ellipse at 30% 24%, rgba(255,255,255,0.34) 0 18%, transparent 19%),
+    radial-gradient(ellipse at 42% 34%, #fff2a6 0%, #ffd84d 42%, #f4b400 78%, #d99600 100%);
+  box-shadow:
+    inset -12px -14px 18px rgba(165, 108, 0, 0.18),
+    inset 10px 12px 16px rgba(255,255,255,0.14),
+    0 12px 22px rgba(120, 85, 0, 0.18);
+  filter: drop-shadow(0 8px 14px rgba(180, 130, 0, 0.14));
+  animation: gooHang 4.2s ease-in-out infinite;
+}
+
+.friend .eye {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(42, 36, 24, 0.72);
+  z-index: 3;
+}
+
+.friend .eye.left {
+  left: 28%;
+}
+
+.friend .eye.right {
+  right: 28%;
+}
+
+/* on tag */
+.friend-tag {
+  width: 58px;
+  height: 34px;
+  top: -22px;
+  left: -8px;
+  border-radius: 58% 42% 52% 48% / 38% 32% 68% 62%;
+  transform-origin: bottom center;
+}
+
+.friend-tag .eye {
+  top: 12px;
+}
+
+.friend-tag::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  bottom: -10px;
+  width: 14px;
+  height: 18px;
+  background: linear-gradient(180deg, #ffd84d 0%, #f4b400 100%);
+  border-radius: 0 0 12px 10px;
+}
+
+.friend-tag::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  bottom: -18px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f4b400;
+}
+
+/* from top of card */
+.friend-top {
+  width: 84px;
+  height: 46px;
+  top: -6px;
+  right: 84px;
+  border-radius: 44% 56% 46% 54% / 24% 24% 76% 76%;
+  transform-origin: top center;
+}
+
+.friend-top .eye {
+  top: 15px;
+}
+
+.friend-top::before {
+  content: "";
+  position: absolute;
+  left: 22px;
+  bottom: -14px;
+  width: 16px;
+  height: 26px;
+  background: linear-gradient(180deg, #ffd84d 0%, #f4b400 100%);
+  border-radius: 0 0 12px 12px;
+  box-shadow: 24px 6px 0 0 #f4b400;
+}
+
+.friend-top::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  bottom: -24px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f4b400;
+  box-shadow: 24px 10px 0 0 #f4b400;
+}
+
+/* off card edge */
+.friend-edge {
+  width: 62px;
+  height: 40px;
+  right: -18px;
+  top: 118px;
+  border-radius: 46% 54% 42% 58% / 30% 26% 74% 70%;
+  transform-origin: left center;
+}
+
+.friend-edge .eye {
+  top: 14px;
+}
+
+.friend-edge::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: -12px;
+  width: 14px;
+  height: 20px;
+  background: linear-gradient(180deg, #ffd84d 0%, #f4b400 100%);
+  border-radius: 0 0 10px 12px;
+}
+
+.friend-edge::after {
+  content: "";
+  position: absolute;
+  right: 9px;
+  bottom: -20px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #f4b400;
+}
+
+@keyframes gooHang {
+  0% {
+    transform: rotate(0deg) scale(1, 1);
+  }
+  25% {
+    transform: rotate(-2deg) scale(1.03, 0.96);
+  }
+  50% {
+    transform: rotate(1deg) scale(0.97, 1.05);
+  }
+  75% {
+    transform: rotate(2deg) scale(1.01, 0.98);
+  }
+  100% {
+    transform: rotate(0deg) scale(1, 1);
+  }
 }
 
 /* responsive */
@@ -741,80 +681,32 @@ body {
   }
 
   .stream-2 {
-    left: 39%;
-    width: 140px;
+    left: 38%;
+    width: 145px;
   }
 
   .slime-stream {
     width: 120px;
   }
 
-  .slime-stop::after {
-    left: 10%;
-    box-shadow:
-      42px 2px 0 rgba(244, 180, 0, 0.8),
-      86px -2px 0 rgba(244, 180, 0, 0.82);
-  }
-
-  .friend-1 {
-    width: 54px;
-    height: 46px;
-    left: 5%;
-    top: 66%;
-  }
-
-  .friend-1 .eye {
-    top: 17px;
-  }
-
-  .friend-1 .eye.left {
-    left: 18px;
-  }
-
-  .friend-1 .eye.right {
-    right: 16px;
-  }
-
-  .friend-2 {
-    width: 44px;
+  .friend-top {
+    right: 46px;
+    top: -4px;
+    width: 74px;
     height: 40px;
-    right: 8%;
-    top: 16%;
   }
 
-  .friend-2 .eye {
-    top: 14px;
+  .friend-edge {
+    right: -12px;
+    top: 96px;
+    width: 56px;
+    height: 36px;
   }
 
-  .friend-2 .eye.left {
-    left: 14px;
-  }
-
-  .friend-2 .eye.right {
-    right: 12px;
-  }
-
-  .friend-3 {
-    width: 58px;
-    height: 48px;
-    right: 2%;
-    bottom: 14%;
-  }
-
-  .friend-3 .eye {
-    top: 18px;
-  }
-
-  .friend-3 .eye.left {
-    left: 19px;
-  }
-
-  .friend-3 .eye.right {
-    right: 17px;
-  }
-
-  .top-drip {
-    transform: scale(0.82);
-    transform-origin: top center;
+  .friend-tag {
+    width: 50px;
+    height: 30px;
+    left: -4px;
+    top: -18px;
   }
 }
