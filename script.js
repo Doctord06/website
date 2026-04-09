@@ -3,7 +3,7 @@ const buttons = document.querySelectorAll('.btn');
 
 friends.forEach((friend) => {
   friend.addEventListener('mouseenter', () => {
-    friend.style.transform = 'scale(1.12)';
+    friend.style.transform = 'scale(1.08)';
   });
 
   friend.addEventListener('mouseleave', () => {
