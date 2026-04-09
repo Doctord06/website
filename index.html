@@ -7,13 +7,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="scene">
-    <!-- Floating background slime -->
+    <!-- background glow blobs -->
     <div class="slime-layer" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
@@ -21,39 +21,54 @@
       <div class="blob blob-4"></div>
     </div>
 
-    <!-- Decorative drips -->
+    <!-- slime pouring down page -->
+    <div class="page-slime" aria-hidden="true">
+      <div class="slime-stream stream-1"></div>
+      <div class="slime-stream stream-2"></div>
+      <div class="slime-stream stream-3"></div>
+    </div>
+
+    <!-- top drips -->
     <div class="top-drip top-drip-1" aria-hidden="true"></div>
     <div class="top-drip top-drip-2" aria-hidden="true"></div>
     <div class="top-drip top-drip-3" aria-hidden="true"></div>
 
-    <!-- Main content -->
     <main class="hero">
       <section class="hero-card">
-        <div class="hero-text">
-          <span class="tag">Streamer • Slime • Yellow</span>
-          <h1>Chap</h1>
-          <p class="subtitle">
-            just vibing... slightly sticky
-          </p>
-          <p class="description">
-            A yellow slime streamer with tiny slime ball friends always hanging around.
-            Soft chaos. Gooey vibes. Good times.
-          </p>
-
-          <div class="button-row">
-            <a class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Watch Stream</a>
-            <a class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">Join Discord</a>
-          </div>
-        </div>
-
         <div class="hero-art">
           <div class="character-wrap">
-            <!-- Replace chap.png with the actual file name of Chap's image -->
-            <img src="chap.png" alt="Chap yellow slime streamer character" class="chap-image" />
+            <!-- put Chap image back later if you want -->
+            <div class="chap-placeholder" aria-hidden="true"></div>
 
             <div class="friend friend-1" title="Slime friend"></div>
             <div class="friend friend-2" title="Slime friend"></div>
             <div class="friend friend-3" title="Slime friend"></div>
+          </div>
+        </div>
+
+        <div class="hero-text">
+          <div class="slime-stop slime-stop-pill">
+            <span class="tag">Streamer • Slime • Yellow</span>
+          </div>
+
+          <div class="slime-stop slime-stop-title">
+            <h1>Chap</h1>
+          </div>
+
+          <div class="slime-stop slime-stop-subtitle">
+            <p class="subtitle">just vibing... slightly sticky</p>
+          </div>
+
+          <div class="slime-stop slime-stop-description">
+            <p class="description">
+              A yellow slime streamer with tiny slime ball friends always hanging around.
+              Soft chaos. Gooey vibes. Good times.
+            </p>
+          </div>
+
+          <div class="button-row">
+            <a class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Watch Stream</a>
+            <a class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">Join Discord</a>
           </div>
         </div>
       </section>
