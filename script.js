@@ -1,22 +1,51 @@
-const buddies = document.querySelectorAll('.slime-buddy');
-const buttons = document.querySelectorAll('.btn');
+const menuButton = document.querySelector("#menuButton");
+const nav = document.querySelector("#nav");
+const copyIp = document.querySelector("#copyIp");
+const year = document.querySelector("#year");
+const streamStatus = document.querySelector("#streamStatus");
+const streamText = document.querySelector("#streamText");
 
-buddies.forEach((buddy) => {
-  buddy.addEventListener('mouseenter', () => {
-    buddy.style.transform = 'scale(1.08)';
-  });
+year.textContent = new Date().getFullYear();
 
-  buddy.addEventListener('mouseleave', () => {
-    buddy.style.transform = '';
-  });
+menuButton.addEventListener("click", () => {
+  nav.classList.toggle("open");
 });
 
-buttons.forEach((button) => {
-  button.addEventListener('mouseenter', () => {
-    button.style.filter = 'brightness(1.03)';
-  });
-
-  button.addEventListener('mouseleave', () => {
-    button.style.filter = '';
-  });
+nav.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => nav.classList.remove("open"));
 });
+
+copyIp.addEventListener("click", async () => {
+  const ip = "play.drcelestial.net";
+
+  try {
+    await navigator.clipboard.writeText(ip);
+    copyIp.textContent = "Copied!";
+    setTimeout(() => (copyIp.textContent = "Copy IP"), 1400);
+  } catch {
+    copyIp.textContent = ip;
+  }
+});
+
+/*
+  Later, you can replace this fake status with a real API route.
+
+  Example:
+  fetch("https://bot.drcelestial.net/status")
+    .then(res => res.json())
+    .then(data => updateStreamStatus(data.live));
+*/
+
+function updateStreamStatus(isLive) {
+  if (isLive) {
+    streamStatus.textContent = "â LIVE NOW";
+    streamStatus.classList.add("online");
+    streamText.textContent = "DrCelestial is currently live. Jump into the stream.";
+  } else {
+    streamStatus.textContent = "â Offline";
+    streamStatus.classList.remove("online");
+    streamText.textContent = "Currently offline. Follow on Twitch to catch the next stream.";
+  }
+}
+
+updateStreamStatus(false);
